@@ -12,43 +12,67 @@ public class TennisGame {
 	}
 
 	public String getScore() {
+		
+		if(doesGameHaveAWinner()) {
+			return TennisGameConstants.gameWonMessage(findWinnersName());
+		}
+		
+		if(doesGameHaveSomeoneWithAdvantage()) {
+			return TennisGameConstants.advantageMessage(findPlayersNameWithAdvantage());
+		}
+		
+		if(isGameDeuce()) {
+			return TennisGameConstants.deuceMessage();
+		}
 	
 		
-		if(bothPlayersHaveMoreThanOrEqualToMaxPoints()) {
-			if(firstPlayer.getPoints() > secondPlayer.getPoints()) {
-				if((firstPlayer.getPoints() - secondPlayer.getPoints()) > 1) {
-					return TennisGameConstants.gameWonMessage(firstPlayer.getName());
-				}
-				else
-				  return TennisGameConstants.advantageMessage(firstPlayer.getName());
-			}
-			else if(secondPlayer.getPoints() > firstPlayer.getPoints()) {
-				if((secondPlayer.getPoints() - firstPlayer.getPoints()) > 1) {
-					return TennisGameConstants.gameWonMessage(secondPlayer.getName());
-				}
-				else
-    			   return TennisGameConstants.advantageMessage(secondPlayer.getName());
-			}
-			else
-			   return TennisGameConstants.deuceMessage();
-		}
-		else if(firstPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) {
-			return TennisGameConstants.gameWonMessage(firstPlayer.getName());
-		}
-        else if(secondPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) {
-			return TennisGameConstants.gameWonMessage(secondPlayer.getName());
-		}
-		else
-			return TennisGameConstants.getPointsDescription(firstPlayer.getPoints()) + " " + TennisGameConstants.getPointsDescription(secondPlayer.getPoints());
+		
+		return TennisGameConstants.getPointsDescription(firstPlayer.getPoints()) + " " + TennisGameConstants.getPointsDescription(secondPlayer.getPoints());
 		
 	}
 
-	private boolean bothPlayersHaveMoreThanOrEqualToMaxPoints() {
-		return (firstPlayer.getPoints()  >= TennisGameConstants.MAXIMUM_POINTS) && (secondPlayer.getPoints() >= TennisGameConstants.MAXIMUM_POINTS);
+	private boolean isGameDeuce() {
+		return ((firstPlayer.getPoints() == secondPlayer.getPoints()) && (firstPlayer.getPoints() >= TennisGameConstants.MAXIMUM_POINTS));
+	}
+
+	private String findPlayersNameWithAdvantage() {
+		return firstPlayer.isAtAdvantage()?firstPlayer.getName():secondPlayer.getName();
+	}
+
+	private boolean doesGameHaveSomeoneWithAdvantage() {
+		
+        if ((firstPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) && (firstPlayer.getPoints() - secondPlayer.getPoints() == 1)){
+			
+			firstPlayer.setAdvantage(true);
+			return true;
+		}
+		else if ((secondPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) && (secondPlayer.getPoints() - firstPlayer.getPoints() == 1)){
+            secondPlayer.setAdvantage(true);
+			return true;
+		}
+        else
+        	return false;
+	}
+
+	private String findWinnersName() {
+		return firstPlayer.hasWon()?firstPlayer.getName():secondPlayer.getName();
+	}
+
+	private boolean doesGameHaveAWinner() {
+		if ((firstPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) && (firstPlayer.getPoints() - secondPlayer.getPoints() > 1)){
+			
+			firstPlayer.setWon(true);
+			return true;
+		}
+		else if ((secondPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) && (secondPlayer.getPoints() - firstPlayer.getPoints() > 1)){
+            secondPlayer.setWon(true);
+			return true;
+		}
+        else
+        	return false;
 	}
 
 	
-
 	public void firstPlayerScores() {
 		
 		firstPlayer.incrementPoints();
