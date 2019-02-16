@@ -14,7 +14,7 @@ public class TennisGame {
 	public String getScore() {
 	
 		
-		if((firstPlayer.getPoints()  >= TennisGameConstants.MAXIMUM_POINTS) && (secondPlayer.getPoints() >= TennisGameConstants.MAXIMUM_POINTS)) {
+		if(bothPlayersHaveMoreThanOrEqualToMaxPoints()) {
 			if(firstPlayer.getPoints() > secondPlayer.getPoints()) {
 				if((firstPlayer.getPoints() - secondPlayer.getPoints()) > 1) {
 					return TennisGameConstants.gameWonMessage(firstPlayer.getName());
@@ -41,6 +41,10 @@ public class TennisGame {
 		else
 			return TennisGameConstants.getPointsDescription(firstPlayer.getPoints()) + " " + TennisGameConstants.getPointsDescription(secondPlayer.getPoints());
 		
+	}
+
+	private boolean bothPlayersHaveMoreThanOrEqualToMaxPoints() {
+		return (firstPlayer.getPoints()  >= TennisGameConstants.MAXIMUM_POINTS) && (secondPlayer.getPoints() >= TennisGameConstants.MAXIMUM_POINTS);
 	}
 
 	
