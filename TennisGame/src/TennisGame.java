@@ -17,44 +17,33 @@ public class TennisGame {
 		if((firstPlayer.getPoints()  >= TennisGameConstants.MAXIMUM_POINTS) && (secondPlayer.getPoints() >= TennisGameConstants.MAXIMUM_POINTS)) {
 			if(firstPlayer.getPoints() > secondPlayer.getPoints()) {
 				if((firstPlayer.getPoints() - secondPlayer.getPoints()) > 1) {
-					return gameWonMessage(firstPlayer.getName());
+					return TennisGameConstants.gameWonMessage(firstPlayer.getName());
 				}
 				else
-				  return advantageMessage(firstPlayer.getName());
+				  return TennisGameConstants.advantageMessage(firstPlayer.getName());
 			}
 			else if(secondPlayer.getPoints() > firstPlayer.getPoints()) {
 				if((secondPlayer.getPoints() - firstPlayer.getPoints()) > 1) {
-					return this.gameWonMessage(secondPlayer.getName());
+					return TennisGameConstants.gameWonMessage(secondPlayer.getName());
 				}
 				else
-    			   return this.advantageMessage(secondPlayer.getName());
+    			   return TennisGameConstants.advantageMessage(secondPlayer.getName());
 			}
 			else
-			   return this.deuceMessage();
+			   return TennisGameConstants.deuceMessage();
 		}
 		else if(firstPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) {
-			return this.gameWonMessage(firstPlayer.getName());
+			return TennisGameConstants.gameWonMessage(firstPlayer.getName());
 		}
         else if(secondPlayer.getPoints() > TennisGameConstants.MAXIMUM_POINTS) {
-			return this.gameWonMessage(secondPlayer.getName());
+			return TennisGameConstants.gameWonMessage(secondPlayer.getName());
 		}
 		else
-			return firstPlayer.getPointsDescription() + " " + secondPlayer.getPointsDescription();
+			return TennisGameConstants.getPointsDescription(firstPlayer.getPoints()) + " " + TennisGameConstants.getPointsDescription(secondPlayer.getPoints());
 		
 	}
 
-	private String deuceMessage() {
-		
-		return TennisGameConstants.DEUCE;
-	}
-
-	private String advantageMessage(String name) {
-		return TennisGameConstants.ADVANTAGE+name;
-	}
-
-	private String gameWonMessage(String name) {
-		return TennisGameConstants.GAME_WON_BY+name;
-	}
+	
 
 	public void firstPlayerScores() {
 		
