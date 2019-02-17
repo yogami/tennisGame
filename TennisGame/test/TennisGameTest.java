@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 class TennisGameTest {
 	
-	public Player firstPlayer,secondPlayer;
-	public TennisGame game;
+	Player firstPlayer,secondPlayer;
+	TennisGame game;
 	
 	@BeforeEach
 	public void setUp() {
@@ -73,6 +73,38 @@ class TennisGameTest {
 		game.firstPlayerScores();
 		game.firstPlayerScores();
 		assertEquals(TennisGameConstants.THIRTY + " " +TennisGameConstants.THIRTY, game.getScore());
+	}
+	
+	@Test
+    public void scoreIsLoveForty() {
+		
+		game.secondPlayerScores();
+		game.secondPlayerScores();
+		game.secondPlayerScores();
+		
+		assertEquals(TennisGameConstants.LOVE + " " +TennisGameConstants.FORTY, game.getScore());
+	}
+	
+	@Test
+    public void scoreIsThirtyForty() {
+		
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.secondPlayerScores();
+		
+		assertEquals(TennisGameConstants.THIRTY + " " +TennisGameConstants.FORTY, game.getScore());
+	}
+	
+	@Test
+    public void scoreIsFortyLove() {
+		
+		game.firstPlayerScores();
+		game.firstPlayerScores();
+		game.firstPlayerScores();
+		
+		assertEquals(TennisGameConstants.FORTY + " " +TennisGameConstants.LOVE, game.getScore());
 	}
 	
 	@Test
@@ -157,6 +189,35 @@ class TennisGameTest {
 		game.secondPlayerScores();
 		game.firstPlayerScores();
 		assertEquals(TennisGameConstants.DEUCE,game.getScore());
+	}
+	
+	@Test
+	public void whenOnePlayernHasAdvantageAfterTheSecondDeuce() {
+		game.secondPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.firstPlayerScores();
+		assertEquals(TennisGameConstants.ADVANTAGE+firstPlayer.getName(),game.getScore());
+	}
+	
+	@Test
+	public void whenOnePlayernWinsAfterTheSecondDeuce() {
+		game.secondPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.firstPlayerScores();
+		game.secondPlayerScores();
+		game.secondPlayerScores();
+		assertEquals(TennisGameConstants.GAME_WON_BY+secondPlayer.getName(),game.getScore());
 	}
 	
 	@Test
